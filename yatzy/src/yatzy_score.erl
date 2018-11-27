@@ -8,6 +8,15 @@ calc(chance,Roll) ->
 calc(ones,Roll) ->
   ones_test(lists:sort(Roll));
 
+calc(twos,Roll) ->
+  twos_test(lists:sort(Roll));
+
+calc(threes,Roll) ->
+  threes_test(lists:sort(Roll));
+
+calc(fours,Roll) ->
+  fours_test(lists:sort(Roll));
+
 calc(one_pair,Roll) ->
   one_pair_test(lists:sort(Roll));
 
@@ -42,6 +51,59 @@ ones_test([1,1,_,_,_]) ->
   1*2;
 ones_test([1,_,_,_,_]) ->
   1*1.
+
+twos_test([2,2,2,2,2]) ->
+  2*5;
+twos_test([_,2,2,2,2])->
+  2*4;
+twos_test([2,2,2,2,_]) ->
+  2*4;
+twos_test([2,2,2,_,_]) ->
+  2*3;
+twos_test([_,2,2,2,_]) ->
+  2*3;
+twos_test([_,_,2,2,2]) ->
+  2*3;
+twos_test([2,2,_,_,_]) ->
+  2*2;
+twos_test([_,2,2,_,_]) ->
+  2*2;
+twos_test([_,_,2,2,_]) ->
+  2*2;
+twos_test([_,_,_,2,2]) ->
+  2*2;
+twos_test([2,_,_,_,_]) ->
+  2*1;
+twos_test([_,2,_,_,_]) ->
+  2*1;
+twos_test([_,_,2,_,_]) ->
+  2*1;
+twos_test([_,_,_,2,_]) ->
+  2*1;
+twos_test([_,_,_,_,2]) ->
+  2*1.
+
+threes_test([3,3,3,3,3]) ->
+  3*5;
+threes_test([3,3,3,3,_]) ->
+  3*4;
+threes_test([3,3,3,_,_]) ->
+  3*3;
+threes_test([3,3,_,_,_]) ->
+  3*2;
+threes_test([3,_,_,_,_]) ->
+  3*1.
+
+fours_test([4,4,4,4,4]) ->
+  4*5;
+fours_test([4,4,4,4,_]) ->
+  4*4;
+fours_test([4,4,4,_,_]) ->
+  4*3;
+fours_test([4,4,_,_,_]) ->
+  4*2;
+fours_test([4,_,_,_,_]) ->
+  4*1.
 
 one_pair_test([_,_,_,X,X]) ->
   X*2;
