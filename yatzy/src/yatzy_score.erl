@@ -5,6 +5,9 @@
 calc(chance,Roll) ->
   lists:sum(Roll);
 
+calc(ones,Roll) ->
+  ones_test(lists:sort(Roll));
+
 calc(one_pair,Roll) ->
   one_pair_test(lists:sort(Roll));
 
@@ -28,6 +31,17 @@ calc(full_house,Roll) ->
 
 calc(yatzy,Roll) ->
   yatzy_score(Roll).
+
+ones_test([1,1,1,1,1]) ->
+  1*5;
+ones_test([1,1,1,1,_]) ->
+  1*4;
+ones_test([1,1,1,_,_]) ->
+  1*3;
+ones_test([1,1,_,_,_]) ->
+  1*2;
+ones_test([1,_,_,_,_]) ->
+  1*1.
 
 one_pair_test([_,_,_,X,X]) ->
   X*2;
