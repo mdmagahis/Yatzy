@@ -1,6 +1,6 @@
 -module(yatzy).
 
--type slot() :: 'ones' | 'twos' | 'threes' | 'fours' | 'fives' | 'sixes' | 'one pair' | 'two pairs' | 'three of a kind' |  'four of a kind' |  'small straight' |  'large straight' |  'full house' |  'chance' | 'yatzy'.
+-type slot() :: 'ones' | 'twos' | 'threes' | 'fours' | 'fives' | 'sixes' | 'one_pair' | 'two_pairs' | 'three_of_a_kind' |  'four_of_a_kind' | 'small_straight' | 'large_straight' | 'full_house' | 'chance' | 'yatzy'.
 
 -type slot_type() :: 'upper' | 'lower'.
 
