@@ -119,7 +119,11 @@ two_pair_test([_,X,X,Y,Y]) ->
 two_pair_test([X,X,_,Y,Y]) ->
   X*2 + Y*2;
 two_pair_test([X,X,Y,Y,_]) ->
-  X*2 + Y*2.
+  X*2 + Y*2;
+two_pair_test([X,X,X,X,_]) ->
+  X*4;
+two_pair_test([_,X,X,X,X]) ->
+  X*4.
 
 three_of_a_kind_test([_,_,X,X,X]) ->
   X*3;
