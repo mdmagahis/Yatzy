@@ -17,6 +17,9 @@ calc(three_of_a_kind,Roll) ->
 calc(four_of_a_kind,Roll) ->
   four_of_a_kind_test(lists:sort(Roll));
 
+calc(small_straight,Roll) ->
+  small_straight_test(lists:sort(Roll));
+
 calc(yatzy,Roll) ->
   yatzy_score(Roll).
 
@@ -47,6 +50,9 @@ four_of_a_kind_test([_,X,X,X,X]) ->
   X*4;
 four_of_a_kind_test([X,X,X,X,_]) ->
   X*4.
+
+small_straight_test([1,2,3,4,5]) ->
+  1+2+3+4+5.
 
 yatzy_score([X,X,X,X,X]) ->
   50.
