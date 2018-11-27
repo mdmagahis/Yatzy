@@ -1,0 +1,2 @@
+-export([calc/2]).
+-spec calc(yatzy:slot(), yatzy:roll()) -> non_neg_integer().
