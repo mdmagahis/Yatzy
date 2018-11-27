@@ -6,22 +6,22 @@ calc(chance,Roll) ->
   lists:sum(Roll);
 
 calc(ones,Roll) ->
-  lists:sum(lists:filter(fun(X) -> X==1 end,Roll));
+  score_upper(Roll,1);
 
 calc(twos,Roll) ->
-  lists:sum(lists:filter(fun(X) -> X==2 end,Roll));
+  score_upper(Roll,2);
 
 calc(threes,Roll) ->
-  lists:sum(lists:filter(fun(X) -> X==3 end,Roll));
+  score_upper(Roll,3);
 
 calc(fours,Roll) ->
-  lists:sum(lists:filter(fun(X) -> X==4 end,Roll));
+  score_upper(Roll,4);
 
 calc(fives,Roll) ->
-  lists:sum(lists:filter(fun(X) -> X==5 end,Roll));
+  score_upper(Roll,5);
 
 calc(sixes,Roll) ->
-  lists:sum(lists:filter(fun(X) -> X==6 end,Roll));
+  score_upper(Roll,6);
 
 calc(one_pair,Roll) ->
   one_pair_test(lists:sort(Roll));
@@ -46,6 +46,9 @@ calc(full_house,Roll) ->
 
 calc(yatzy,Roll) ->
   yatzy_score(Roll).
+
+score_upper(Roll,N) ->
+  lists:sum(lists:filter(fun(X) -> X==N end,Roll)).
 
 one_pair_test([_,_,_,X,X]) ->
   X*2;
