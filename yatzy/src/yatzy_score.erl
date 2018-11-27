@@ -23,6 +23,9 @@ calc(small_straight,Roll) ->
 calc(large_straight,Roll) ->
   large_straight_test(lists:sort(Roll));
 
+calc(full_house,Roll) ->
+  full_house_test(lists:sort(Roll));
+
 calc(yatzy,Roll) ->
   yatzy_score(Roll).
 
@@ -59,6 +62,11 @@ small_straight_test([1,2,3,4,5]) ->
 
 large_straight_test([2,3,4,5,6]) ->
   2+3+4+5+6.
+
+full_house_test([X,X,Y,Y,Y]) ->
+  X*2 + Y*3;
+full_house_test([Y,Y,Y,X,X]) ->
+  Y*3 + X*2.
 
 yatzy_score([X,X,X,X,X]) ->
   50.
