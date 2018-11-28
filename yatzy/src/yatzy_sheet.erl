@@ -17,7 +17,7 @@
                               | 'invalid_slot'
                               | 'empty'.
 -spec upper_total(t()) -> non_neg_integer().
--spec bonus(to()) -> 0 | 50.
+-spec bonus(t()) -> 0 | 50.
 -spec lower_total(t()) -> non_neg_integer().
 -spec total(t()) -> non_neg_integer().
 
@@ -33,7 +33,7 @@ new() ->
 fill(Slot,Roll,Sheet) ->
   case lists:member(Slot,slot_list()) of
     true ->
-      case get(Slot, Sheet, empty) of
+      case yatzy_sheet:get(Slot, Sheet, empty) of
         empty ->
           {ok, maps:put(Slot,Roll,Sheet)};
         Value ->
