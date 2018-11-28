@@ -54,5 +54,8 @@ get(Slot,Sheet) ->
       invalid_slot
   end.
 
+upper_total(Sheet) ->
+  lists:sum(maps:values(maps:with(upper_slot_list,Sheet))).
+
 total(Sheet) ->
   lists:sum(maps:values(Sheet)).
