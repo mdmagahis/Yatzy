@@ -21,11 +21,12 @@
 -spec lower_total(t()) -> non_neg_integer().
 -spec total(t()) -> non_neg_integer().
 
-% definitions--
+% local lists--
 slot_list() -> ['ones', 'twos', 'threes', 'fours', 'fives', 'sixes', 'one_pair', 'two_pairs', 'three_of_a_kind',  'four_of_a_kind', 'small_straight', 'large_straight', 'full_house', 'chance', 'yatzy'].
 upper_slot_list() -> ['ones', 'twos', 'threes', 'fours', 'fives', 'sixes'].
 lower_slot_list() -> ['one_pair', 'two_pairs', 'three_of_a_kind',  'four_of_a_kind', 'small_straight', 'large_straight', 'full_house', 'chance', 'yatzy'].
 
+% definitions--
 new() ->
   maps:new().
 
