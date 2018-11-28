@@ -61,7 +61,6 @@ one_pair_test([X,X,_,_,_]) ->
 one_pair_test(_) ->
   0.
 
-
 two_pair_test([_,X,X,Y,Y]) ->
   X*2 + Y*2;
 two_pair_test([X,X,_,Y,Y]) ->
@@ -69,9 +68,9 @@ two_pair_test([X,X,_,Y,Y]) ->
 two_pair_test([X,X,Y,Y,_]) ->
   X*2 + Y*2;
 two_pair_test([X,X,X,X,_]) ->
-  X*4;
+  0;
 two_pair_test([_,X,X,X,X]) ->
-  X*4;
+  0;
 two_pair_test(_) ->
   0.
 
@@ -80,18 +79,26 @@ three_of_a_kind_test([_,_,X,X,X]) ->
 three_of_a_kind_test([_,X,X,X,_]) ->
   X*3;
 three_of_a_kind_test([X,X,X,_,_]) ->
-  X*3.
+  X*3;
+three_of_a_kind_test(_) ->
+  0.
 
 four_of_a_kind_test([_,X,X,X,X]) ->
   X*4;
 four_of_a_kind_test([X,X,X,X,_]) ->
-  X*4.
+  X*4;
+four_of_a_kind_test(_) ->
+  0.
 
 small_straight_test([1,2,3,4,5]) ->
-  1+2+3+4+5.
+  1+2+3+4+5;
+small_straight_test(_) ->
+  0.
 
 large_straight_test([2,3,4,5,6]) ->
-  2+3+4+5+6.
+  2+3+4+5+6;
+large_straight_test(_) ->
+  0.
 
 full_house_test([X,X,Y,Y,Y]) ->
   X*2 + Y*3;
@@ -101,4 +108,6 @@ full_house_test([X,X,X,X,X]) ->
   X*5.
 
 yatzy_score([X,X,X,X,X]) ->
-  50.
+  50;
+yatzy_score(_) ->
+  0.
