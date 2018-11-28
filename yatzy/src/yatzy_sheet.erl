@@ -24,6 +24,7 @@
 % definitions--
 slot_list() -> ['ones', 'twos', 'threes', 'fours', 'fives', 'sixes', 'one_pair', 'two_pairs', 'three_of_a_kind',  'four_of_a_kind', 'small_straight', 'large_straight', 'full_house', 'chance', 'yatzy'].
 upper_slot_list() -> ['ones', 'twos', 'threes', 'fours', 'fives', 'sixes'].
+lower_slot_list() -> ['one_pair', 'two_pairs', 'three_of_a_kind',  'four_of_a_kind', 'small_straight', 'large_straight', 'full_house', 'chance', 'yatzy'].
 
 new() ->
   maps:new().
@@ -56,6 +57,17 @@ get(Slot,Sheet) ->
 
 upper_total(Sheet) ->
   lists:sum(maps:values(maps:with(upper_slot_list,Sheet))).
+
+bonus(Sheet) ->
+  case upper_total(Sheet) >= 63 of
+    true ->
+      50;
+    false ->
+      0
+  end.
+
+lower_total(Sheet) ->
+  lists:sum(maps:values(maps:with(lower_slot_list,Sheet))).
 
 total(Sheet) ->
   lists:sum(maps:values(Sheet)).
