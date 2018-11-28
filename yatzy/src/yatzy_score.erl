@@ -2,6 +2,7 @@
 -export([calc/2]).
 -spec calc(yatzy:slot(), yatzy:roll()) -> non_neg_integer().
 
+% calc functions--
 calc(chance,Roll) ->
   lists:sum(Roll);
 
@@ -47,6 +48,7 @@ calc(full_house,Roll) ->
 calc(yatzy,Roll) ->
   yatzy_score(Roll).
 
+% helper functions--
 score_upper(Roll,N) ->
   lists:sum(lists:filter(fun(X) -> X==N end,Roll)).
 
