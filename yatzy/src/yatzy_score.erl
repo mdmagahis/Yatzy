@@ -67,10 +67,6 @@ two_pair_test([X,X,_,Y,Y]) when X/=Y ->
   X*2 + Y*2;
 two_pair_test([X,X,Y,Y,_]) when X/=Y ->
   X*2 + Y*2;
-% two_pair_test([X,X,X,X,_]) ->
-%   0;
-% two_pair_test([_,X,X,X,X]) ->
-%   0;
 two_pair_test(_) ->
   0.
 
@@ -100,12 +96,12 @@ large_straight_test([2,3,4,5,6]) ->
 large_straight_test(_) ->
   0.
 
-full_house_test([X,X,Y,Y,Y]) ->
+full_house_test([X,X,Y,Y,Y]) when X/=Y ->
   X*2 + Y*3;
-full_house_test([Y,Y,Y,X,X]) ->
+full_house_test([Y,Y,Y,X,X]) when X/=Y ->
   Y*3 + X*2;
-full_house_test([X,X,X,X,X]) ->
-  X*5.
+full_house_test(_) ->
+  0.
 
 yatzy_score([X,X,X,X,X]) ->
   50;
