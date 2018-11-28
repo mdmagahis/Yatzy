@@ -61,16 +61,16 @@ one_pair_test([X,X,_,_,_]) ->
 one_pair_test(_) ->
   0.
 
-two_pair_test([_,X,X,Y,Y]) ->
+two_pair_test([_,X,X,Y,Y]) when X/=Y ->
   X*2 + Y*2;
-two_pair_test([X,X,_,Y,Y]) ->
+two_pair_test([X,X,_,Y,Y]) when X/=Y ->
   X*2 + Y*2;
-two_pair_test([X,X,Y,Y,_]) ->
+two_pair_test([X,X,Y,Y,_]) when X/=Y ->
   X*2 + Y*2;
-two_pair_test([X,X,X,X,_]) ->
-  0;
-two_pair_test([_,X,X,X,X]) ->
-  0;
+% two_pair_test([X,X,X,X,_]) ->
+%   0;
+% two_pair_test([_,X,X,X,X]) ->
+%   0;
 two_pair_test(_) ->
   0.
 
