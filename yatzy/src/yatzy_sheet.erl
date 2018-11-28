@@ -22,13 +22,26 @@
 -spec total(t()) -> non_neg_integer().
 
 % definitions--
+slot_list() -> ['ones', 'twos', 'threes', 'fours', 'fives', 'sixes', 'one_pair', 'two_pairs', 'three_of_a_kind',  'four_of_a_kind', 'small_straight', 'large_straight', 'full_house', 'chance', 'yatzy'].
+
 new() ->
   maps:new().
 
-% fill(yatzy,Roll,Map) ->
+fill(Slot,Roll,Sheet) ->
+  case lists:member(Slot,slot_list()) of
+    true ->
+      case get(Slot, Sheet, empty) of
+        empty ->
+          maps:put(Slot,Roll,Sheet);
+        Value ->
+          already_filled
+      end;
+    false ->
+      invalid_slot
+  end.
 
 get(Slot,Sheet) ->
-  case lists:member(Slot,yatzy:slot()) of
+  case lists:member(Slot,slot_list()) of
     true ->
       case maps:get(Slot, Sheet, empty) of
         empty ->
