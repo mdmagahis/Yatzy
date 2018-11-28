@@ -32,7 +32,7 @@ fill(Slot,Roll,Sheet) ->
     true ->
       case get(Slot, Sheet, empty) of
         empty ->
-          maps:put(Slot,Roll,Sheet);
+          {ok, maps:put(Slot,Roll,Sheet);
         Value ->
           already_filled
       end;
