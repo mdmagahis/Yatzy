@@ -14,7 +14,7 @@
                               | 'invalid_slot'
                               | 'empty'.
 
--export([uppoer_total/1]).
+-export([upper_total/1]).
 -spec upper_total(t()) -> non_neg_integer().
 
 -export([bonus/1]).
@@ -28,7 +28,36 @@
 
 % definitions--
 new() ->
-  map.
+  maps:new().
+
+% fill(yatzy,Roll,Map) ->
+
+get(_,#{}) ->
+  'empty'.
+get(Slot,_) ->
+  case lists:member(Slot,yatzy:slot()) of
+    true ->
+      % ok;
+      case Slot of
+        'ones'            -> {'filled', 0}; % MDM
+        'twos'            -> ok;
+        'threes'          -> ok;
+        'fours'           -> ok;
+        'fives'           -> ok;
+        'sixes'           -> ok;
+        'one_pair'        -> ok;
+        'two_pairs'       -> ok;
+        'three_of_a_kind' -> ok;
+        'four_of_a_kind'  -> ok;
+        'small_straight'  -> ok;
+        'large_straight'  -> ok;
+        'full_house'      -> ok;
+        'chance'          -> ok;
+        'yatzy'           -> ok
+      end;
+    false ->
+      'invalid_slot'
+  end.
 
 total(map) ->
   0.
