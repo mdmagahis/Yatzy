@@ -23,6 +23,7 @@
 
 % definitions--
 slot_list() -> ['ones', 'twos', 'threes', 'fours', 'fives', 'sixes', 'one_pair', 'two_pairs', 'three_of_a_kind',  'four_of_a_kind', 'small_straight', 'large_straight', 'full_house', 'chance', 'yatzy'].
+upper_slot_list() -> ['ones', 'twos', 'threes', 'fours', 'fives', 'sixes'].
 
 new() ->
   maps:new().
@@ -32,7 +33,7 @@ fill(Slot,Roll,Sheet) ->
     true ->
       case get(Slot, Sheet, empty) of
         empty ->
-          {ok, maps:put(Slot,Roll,Sheet);
+          {ok, maps:put(Slot,Roll,Sheet)};
         Value ->
           already_filled
       end;
@@ -53,5 +54,5 @@ get(Slot,Sheet) ->
       invalid_slot
   end.
 
-total(map) ->
-  0.
+total(Sheet) ->
+  lists:sum(maps:values(Sheet)).
