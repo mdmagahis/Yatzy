@@ -5,5 +5,24 @@
                                                      | {error, Reason::any()}.
 -spec sheet(Name::atom()) -> yatzy_sheet:t().
 
-new(Atom) ->
-  spawn(test).
+new(Player) ->
+  Pid = spawn(fun() -> loop(yatzy_sheet:new()) end),
+  register(Player,Pid),
+  {ok, Pid}.
+
+fill(Player, Slot, Roll) ->
+  ok.
+
+sheet(Player) ->
+  Player ! {self(), sheet},
+  receive
+    Sheet ->
+      Sheet
+  end.
+
+loop(Sheet) ->
+  receive
+    {From, sheet} ->
+      From ! Sheet,
+      loop(Sheet)
+  end.
