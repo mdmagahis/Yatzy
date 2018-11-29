@@ -11,7 +11,13 @@ new(Player) ->
   {ok, Pid}.
 
 fill(Player, Slot, Roll) ->
-  ok.
+  Player ! {self(), {fill, Slot, Roll}},
+  % Player ! {self(), sheet},
+  receive
+    Reply ->
+      Reply
+      % yatzy_sheet:fill(Slot,Roll,Sheet)
+  end.
 
 sheet(Player) ->
   Player ! {self(), sheet},
@@ -24,5 +30,15 @@ loop(Sheet) ->
   receive
     {From, sheet} ->
       From ! Sheet,
-      loop(Sheet)
+      loop(Sheet);
+    {From, {fill, Slot, Roll}} ->
+      case yatzy_sheet:fill(Slot, Roll, Sheet) of
+        {ok, NewSheet} ->
+          {filled, Score} = yatzy_sheet:get(Slot, NewSheet),
+          From ! {ok, Score},
+          loop(NewSheet);
+        Reason ->
+          From ! {error, Reason},
+          loop(Sheet)
+      end
   end.
