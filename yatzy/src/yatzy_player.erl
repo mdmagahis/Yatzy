@@ -12,11 +12,9 @@ new(Player) ->
 
 fill(Player, Slot, Roll) ->
   Player ! {self(), {fill, Slot, Roll}},
-  % Player ! {self(), sheet},
   receive
     Reply ->
       Reply
-      % yatzy_sheet:fill(Slot,Roll,Sheet)
   end.
 
 sheet(Player) ->
