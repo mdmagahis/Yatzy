@@ -33,7 +33,7 @@ new() ->
 fill(Slot,Roll,Sheet) ->
   case lists:member(Slot,slot_list()) of
     true ->
-      case yatzy_sheet:get(Slot, Sheet, empty) of
+      case maps:get(Slot, Sheet, empty) of
         empty ->
           {ok, maps:put(Slot,Roll,Sheet)};
         Value ->
