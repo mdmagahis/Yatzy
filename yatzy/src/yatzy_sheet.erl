@@ -35,7 +35,8 @@ fill(Slot,Roll,Sheet) ->
     true ->
       case maps:get(Slot, Sheet, empty) of
         empty ->
-          {ok, maps:put(Slot,Roll,Sheet)};
+          Score = yatzy_score:calc(Slot,Roll),
+          {ok, maps:put(Slot,Score,Sheet)};
         Value ->
           already_filled
       end;
