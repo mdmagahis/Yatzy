@@ -94,8 +94,8 @@ second_roll(Roll) ->
 third_roll(Roll) ->
   receive
     {From, {keep, _Keep}} ->
-          From ! finished,
-          third_roll(Roll);
+      From ! finished,
+      third_roll(Roll);
     {From, dice} ->
       From ! Roll,
       third_roll(Roll);
