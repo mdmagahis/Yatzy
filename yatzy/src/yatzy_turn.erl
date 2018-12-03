@@ -16,8 +16,6 @@
 
 start() ->
   Roll = [rand:uniform(6) || _ <- lists:seq(1,5)],
-  % RollsRemaining = 2,
-  % TurnPid = spawn(fun() -> loop(Roll, RollsRemaining) end),
   TurnPid = spawn(fun() -> first_roll(Roll) end),
   {ok, TurnPid}.
 
@@ -96,15 +94,8 @@ second_roll(Roll) ->
 third_roll(Roll) ->
   receive
     {From, {keep, _Keep}} ->
-      % TestRoll = new_roll(Roll, Keep),
-      % case TestRoll of
-        % {ok, NewRoll} ->
           From ! finished,
           third_roll(Roll);
-        % _ ->
-        %   From ! TestRoll, % this should be invalid_keepers
-        %   third_roll(Roll)
-      % end;
     {From, dice} ->
       From ! Roll,
       third_roll(Roll);
@@ -125,67 +116,3 @@ new_roll(Roll, Keep) ->
     _ ->
       invalid_keepers
   end.
-
-% loop(Roll, RollsRemaining) ->
-%   receive
-%     {From, {keep, Keep}} ->
-%       % verify valid keepers
-%       case lists:subtract(Keep, Roll) of
-%         [] ->
-%           case RollsRemaining of
-%             2 ->
-%               NewRoll = new_roll(Roll, Keep, RollsRemaining),
-%               From ! {ok, NewRoll},
-%               loop(NewRoll, RollsRemaining);
-%             1 ->
-%               NewRoll = new_roll(Roll, Keep, RollsRemaining),
-%               From ! {ok, NewRoll},
-%               finished(NewRoll)
-%             end;
-%           _ ->
-%             From ! invalid_keepers,
-%             loop(Roll, RollsRemaining)
-%         end;
-%     {From, dice} ->
-%       From ! Roll,
-%       loop(Roll, RollsRemaining);
-%     {From, rolls_left} ->
-%       From ! RollsRemaining,
-%       loop(Roll, RollsRemaining);
-%     {From, stop} ->
-%       From ! Roll
-%   end.
-
-% new_roll(Roll, Keep, RollsRemaining) ->
-%   update_rolls_left(RollsRemaining),
-%   % ReducedRoll = lists:delete(Keep,Roll),
-%   ReducedRoll = lists:filter(fun (Elem) -> not lists:member(Elem,Keep) end, Roll),
-%   TempRoll = [rand:uniform(6) || _ <- lists:seq(1,length(ReducedRoll))],
-%   Keep ++ TempRoll.
-
-% update_rolls_left(RollsRemaining) ->
-%   % case RollsRemaining of
-%   %   2 ->
-%   %     RollsRemaining = 1;
-%   %   1 ->
-%   %     RollsRemaining = 0
-%   % end.
-%   %
-%   RollsRemaining - 1.
-%   %
-%   % OldRolls = RollsRemaining,
-%   % Decremental = 1,
-%   % RollsRemaining = OldRolls - Decremental.
-%
-% finished(Roll) ->
-%   receive
-%     % stay here until exit
-%     {From, dice} ->
-%       From ! Roll,
-%       finished(Roll);
-%     {From, rolls_left} ->
-%       From ! 0,
-%       finished(Roll);
-%     {From, stop} ->
-%       From ! Roll
-%   end.
