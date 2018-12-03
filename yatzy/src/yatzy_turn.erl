@@ -2,7 +2,8 @@
 -export([start/0, roll/2, dice/1, rolls_left/1, stop/1]).
 -spec start() -> {'ok', TurnPid::pid()}.
 
--spec roll(TurnPid::pid(), Keep::[1..6]) -> {'ok', yatzy:roll()} | 'invalid_keepers' | 'finished'.
+% -spec roll(TurnPid::pid(), Keep::[1..6]) -> {'ok', yatzy:roll()} | 'invalid_keepers' | 'finished'.
+-spec roll(TurnPid::pid(), Keep::[1..6]) -> 'ok' | 'invalid_keepers' | 'finished'.
 %% Once the player has selected which dice to keep roll the remaining dice unless they
 %%have already been rolled twice.
 
@@ -53,7 +54,8 @@ first_roll(Roll) ->
       TestRoll = new_roll(Roll, Keep),
       case TestRoll of
         {ok, NewRoll} ->
-          From ! {ok, NewRoll},
+          % From ! {ok, NewRoll},
+          From ! ok,
           second_roll(NewRoll);
         _ ->
           From ! TestRoll, % this should be invalid_keepers
@@ -75,7 +77,8 @@ second_roll(Roll) ->
       TestRoll = new_roll(Roll, Keep),
       case TestRoll of
         {ok, NewRoll} ->
-          From ! {ok, NewRoll},
+          % From ! {ok, NewRoll},
+          From ! ok,
           third_roll(NewRoll);
         _ ->
           From ! TestRoll, % this should be invalid_keepers
