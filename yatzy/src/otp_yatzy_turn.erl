@@ -1,9 +1,11 @@
 -module(otp_yatzy_turn).
--export([start/0, roll/2, dice/1, rolls_left/1, stop/1]).
+% -export([start/0, roll/2, dice/1, rolls_left/1, stop/1]).
+-export([start_link/0, roll/2, dice/1, rolls_left/1, stop/1]).
 -export([first_roll/3, second_roll/3, third_roll/3]).
 -export([init/1, callback_mode/0]).
 
--spec start() -> {'ok', TurnPid::pid()}.
+% -spec start() -> {'ok', TurnPid::pid()}.
+-spec start_link() -> {'ok', TurnPid::pid()}.
 
 % -spec roll(TurnPid::pid(), Keep::[1..6]) -> {'ok', yatzy:roll()} | 'invalid_keepers' | 'finished'.
 -spec roll(TurnPid::pid(), Keep::[1..6]) -> 'ok' | 'invalid_keepers' | 'finished'.
@@ -20,7 +22,8 @@
 
 -behavior(gen_statem).
 
-start() ->
+% start() ->
+start_link() ->
   Roll = [rand:uniform(6) || _ <- lists:seq(1,5)],
   gen_statem:start_link(?MODULE, Roll, []).
 
