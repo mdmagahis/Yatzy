@@ -9,7 +9,7 @@
 
 %% API
 -export([start_link/0]).
-% -export([start_link/2]).
+-export([new_player/1]).
 
 %% Supervisor callbacks
 -export([init/1]).
@@ -22,8 +22,9 @@
 
 start_link() ->
     supervisor:start_link({local, ?SERVER}, ?MODULE, []).
-% start_link(john, ChildTurnName) ->
-  % supervisor:start_link({local, ?SERVER}, ?MODULE, [john, ChildTurnName]).
+
+new_player(PlayerName) ->
+  supervisor:start_child(?SERVER, {PlayerName, {otp_yatzy_player, start_link, [PlayerName]}, permanent, 2000, worker, [otp_yatzy_player]}).
 
 %%====================================================================
 %% Supervisor callbacks
@@ -35,9 +36,9 @@ start_link() ->
 %% Child :: {Id,StartFunc,Restart,Shutdown,Type,Modules}
 init([]) ->
   % {ok, {{one_for_all, 0, 1}, []}}.
-  ChildPlayer = {john, {otp_yatzy_player, start_link, [john]}, permanent, 2000, worker, [otp_yatzy_player]},
-  % ChildTurn = {ChildTurnName, {otp_yatzy_turn, start_link, []}, permanent, 2000, worker, [otp_yatzy_turn]},
-  {ok, {{one_for_one, 0, 1}, [ChildPlayer]}}.
+  % ChildPlayer = {john, {otp_yatzy_player, start_link, [john]}, permanent, 2000, worker, [otp_yatzy_player]},
+  % {ok, {{one_for_one, 0, 1}, [ChildPlayer]}}.
+  {ok, {{one_for_one, 0, 1}, []}}.
 
 %%====================================================================
 %% Internal functions
