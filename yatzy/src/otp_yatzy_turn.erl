@@ -2,6 +2,7 @@
 -export([start/0, roll/2, dice/1, rolls_left/1, stop/1]).
 -export([first_roll/3, second_roll/3, third_roll/3]).
 -export([init/1, callback_mode/0]).
+
 -spec start() -> {'ok', TurnPid::pid()}.
 
 % -spec roll(TurnPid::pid(), Keep::[1..6]) -> {'ok', yatzy:roll()} | 'invalid_keepers' | 'finished'.
@@ -21,64 +22,21 @@
 
 start() ->
   Roll = [rand:uniform(6) || _ <- lists:seq(1,5)],
-  % TurnPid = spawn(fun() -> first_roll(Roll) end),
-  % {ok, TurnPid}.
   gen_statem:start_link(?MODULE, Roll, []).
 
 roll(TurnPid, Keep) ->
-  % TurnPid ! {self(), {keep, Keep}},
-  % receive
-  %   Reply ->
-  %     Reply
-  % end.
   gen_statem:call(TurnPid, {roll, Keep}).
 
 dice(TurnPid) ->
-  % TurnPid ! {self(), dice},
-  % receive
-  %   Roll ->
-  %     Roll
-  % end.
   gen_statem:call(TurnPid, dice).
 
 rolls_left(TurnPid) ->
-  % TurnPid ! {self(), rolls_left},
-  % receive
-  %   Result ->
-  %     Result
-  % end.
   gen_statem:call(TurnPid, rolls_left).
 
 stop(TurnPid) ->
-  % TurnPid ! {self(), stop},
-  % receive
-  %   Roll ->
-  %     Roll
-  % end.
   gen_statem:call(TurnPid, stop).
 
-% first_roll(Roll) ->
-%   receive
-%     {From, {keep, Keep}} ->
-%       TestRoll = new_roll(Roll, Keep),
-%       case TestRoll of
-%         {ok, NewRoll} ->
-%           % From ! {ok, NewRoll},
-%           From ! ok,
-%           second_roll(NewRoll);
-%         _ ->
-%           From ! TestRoll, % this should be invalid_keepers
-%           first_roll(Roll)
-%       end;
-%     {From, dice} ->
-%       From ! Roll,
-%       first_roll(Roll);
-%     {From, rolls_left} ->
-%       From ! 2,
-%       first_roll(Roll);
-%     {From, stop} ->
-%       From ! Roll
-%   end.
+%% First Roll State
 first_roll({call, From}, {roll, Keep}, Roll) ->
   TestRoll = new_roll(Roll, Keep),
   case TestRoll of
@@ -94,28 +52,7 @@ first_roll({call, From}, rolls_left, _Roll) ->
 first_roll({call, From}, stop, Roll) ->
   {stop_and_reply, normal, {reply, From, Roll}}.
 
-% second_roll(Roll) ->
-%   receive
-%     {From, {keep, Keep}} ->
-%       TestRoll = new_roll(Roll, Keep),
-%       case TestRoll of
-%         {ok, NewRoll} ->
-%           % From ! {ok, NewRoll},
-%           From ! ok,
-%           third_roll(NewRoll);
-%         _ ->
-%           From ! TestRoll, % this should be invalid_keepers
-%           second_roll(Roll)
-%       end;
-%     {From, dice} ->
-%       From ! Roll,
-%       second_roll(Roll);
-%     {From, rolls_left} ->
-%       From ! 1,
-%       second_roll(Roll);
-%     {From, stop} ->
-%       From ! Roll
-%   end.
+%% Second Roll State
 second_roll({call, From}, {roll, Keep}, Roll) ->
   TestRoll = new_roll(Roll, Keep),
   case TestRoll of
@@ -131,20 +68,7 @@ second_roll({call, From}, rolls_left, _Roll) ->
 second_roll({call, From}, stop, Roll) ->
   {stop_and_reply, normal, {reply, From, Roll}}.
 
-% third_roll(Roll) ->
-%   receive
-%     {From, {keep, _Keep}} ->
-%       From ! finished,
-%       third_roll(Roll);
-%     {From, dice} ->
-%       From ! Roll,
-%       third_roll(Roll);
-%     {From, rolls_left} ->
-%       From ! 0,
-%       third_roll(Roll);
-%     {From, stop} ->
-%       From ! Roll
-%   end.
+%% Third Roll State
 third_roll({call, From}, {roll, _Keep}, _Roll) ->
   {keep_state_and_data, {reply, From, finished}};
 third_roll({call, From}, dice, Roll) ->
