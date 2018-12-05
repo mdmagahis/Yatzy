@@ -9,7 +9,7 @@
 
 %% API
 -export([start_link/0]).
--export([new_player/1]).
+-export([new_player/1, new_turn/1]).
 
 %% Supervisor callbacks
 -export([init/1]).
@@ -26,6 +26,9 @@ start_link() ->
 new_player(PlayerName) ->
   supervisor:start_child(?SERVER, {PlayerName, {otp_yatzy_player, start_link, [PlayerName]}, permanent, 2000, worker, [otp_yatzy_player]}).
 
+new_turn(PlayerName) ->
+  supervisor:start_child(?SERVER, {PlayerName, {otp_yatzy_turn, start_link, []}, permanent, 2000, worker, [otp_yatzy_turn]}).
+
 %%====================================================================
 %% Supervisor callbacks
 %%====================================================================
@@ -35,10 +38,9 @@ new_player(PlayerName) ->
 %% Before OTP 18 tuples must be used to specify a child. e.g.
 %% Child :: {Id,StartFunc,Restart,Shutdown,Type,Modules}
 init([]) ->
-  % {ok, {{one_for_all, 0, 1}, []}}.
+  {ok, {{one_for_all, 0, 1}, []}}.
   % ChildPlayer = {john, {otp_yatzy_player, start_link, [john]}, permanent, 2000, worker, [otp_yatzy_player]},
   % {ok, {{one_for_one, 0, 1}, [ChildPlayer]}}.
-  {ok, {{one_for_one, 0, 1}, []}}.
 
 %%====================================================================
 %% Internal functions
